@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla Dinámica con Animaciones</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <style>
+        /* Estilos para la tabla y otros elementos */
+    </style>
+</head>
+<body>
+
+    <h1>AppRegistrosDBAccounting</h1>
+
+    <table id="tarea" class="display" cellspacing="0" width="75%">
+        <thead>
+            <!-- Encabezados de la tabla -->
+        </thead>
+        <tfoot>
+            <!-- Pie de la tabla -->
+        </tfoot>
+    </table>
+
+    <script>
+        $(document).ready(function() {
+            // Inicializamos DataTable y obtenemos información de la API en AWS
+            var tabla = $('#tarea').DataTable({
+                "ajax": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/730692/json.txt",
+                "columns": [
+                    { "data": "name" },
+                    { "data": "position" },
+                    { "data": "office" },
+                    { "data": "extn" },
+                    { "data": "start_date" },
+                    { "data": "salary" }
+                ]
+            });
+
+            // Agregar Registro con Animación
+            $('#agregarRegistro').on('click', function() {
+                // Lógica para agregar el registro
+
+                // Notificación con SweetAlert2
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Registro Agregado',
+                    text: 'El nuevo registro se ha agregado con éxito.',
+                });
+
+                // Actualizar la tabla
+                tabla.ajax.reload();
+            });
+
+            // Modificar Registro con Animación
+            $('#modificarRegistro').on('click', function() {
+                // Lógica para modificar el registro
+
+                // Notificación con SweetAlert2
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Registro Modificado',
+                    text: 'El registro se ha modificado correctamente.',
+                });
+
+                // Actualizar la tabla
+                tabla.ajax.reload();
+            });
+
+            // Borrar Registro con Animación
+            $('#borrarRegistro').on('click', function() {
+                // Lógica para borrar el registro
+
+                // Notificación con SweetAlert2
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Registro Borrado',
+                    text: 'El registro se ha borrado exitosamente.',
+                });
+
+                // Animación para desaparecer el registro borrado
+                tabla.row('.selected').remove().draw(false);
+            });
+        });
+    </script>
+
+</body>
+</html>
